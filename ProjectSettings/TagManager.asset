@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - A_Star
+  - Player_AI
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Grass
   - DangerSight
   - BehindDanger
-  - 
+  - DangerousZone
   - 
   - 
   - 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    
+    //This is the Script for the enemy waypoint system
     public Transform pathwaypointsEnemy;
     public float speed =5;
     public float waitTime = .5f;
@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour
         
     }
 
-    //this handle the enemy waypoint movment to repeat 
+    //this handle the enemy waypoint movement and repeated  
     IEnumerator FollowPathEnemy(Vector3[] waypoints){
         transform.position = waypoints[0];
         int nextTargetIndex = 1;

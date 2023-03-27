@@ -25,19 +25,19 @@ public class Node : IHeapItem<Node> {
 
     
 
-    public int movementPenalty;
+    public int weightPenalty;
 
     int heapIndex;
 
     
 
 
-    public Node(bool walkable, Vector3 worldPosition, int pos_x, int pos_y, int penalty){
+    public Node(bool walkable, Vector3 worldPosition, int pos_x, int pos_y, int weight){
         Walkable = walkable;
         WorldPosition = worldPosition;
         gridPosX = pos_x;
         gridPosY = pos_y;
-        movementPenalty = penalty;
+        weightPenalty = weight;
 
     }
 

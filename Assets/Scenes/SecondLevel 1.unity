@@ -233,11 +233,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1896911094482766265, guid: a8599508359d26849810ddb904fd7d1d, type: 3}
       propertyPath: walkableRegions.Array.data[1].weight
-      value: 0
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 1896911094482766265, guid: a8599508359d26849810ddb904fd7d1d, type: 3}
       propertyPath: walkableRegions.Array.data[2].weight
-      value: 0
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 1896911094482766267, guid: a8599508359d26849810ddb904fd7d1d, type: 3}
       propertyPath: isAStarHeap

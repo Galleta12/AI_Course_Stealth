@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyColliderBehind : MonoBehaviour
 {
-   
+   //The scripts enemy collider and line sight are just for drawing the enemy line of sight and dangerous zones
     public LineRenderer LineBoxBehind;
 
     public Transform BoxCornerLeftUPBehind;

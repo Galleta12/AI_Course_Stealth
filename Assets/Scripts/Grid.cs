@@ -10,10 +10,6 @@ public class Grid : MonoBehaviour {
 public bool displayGridGizmos;
 
 
-public GameObject LineGridPrefab;
-
-
-
 // lets remember that on the world position. The z component is the y component on our grid
 //Layer to check unwakableMask
 public LayerMask UnwalkableMask;
@@ -27,6 +23,7 @@ public NodeType[] walkableRegions;
 public int obstacleProximityPenalty = 10;
 //keep track of the panalty of each layer
 private Dictionary<int,int> walkableRegionsDictionary = new Dictionary<int, int>();
+//this will just get a reference of all the mask where we can walk and like that apply the collisions and movement penalty
 public LayerMask walkableMask;
 //two 2d array that represents the gird
 Node[,] grid;
@@ -37,8 +34,8 @@ private float nodeDiameter;
 private int gridSizeX, gridSizeY;
 // keep track of the penaly min and max. This will be used on the gizmos for visualising the grid with colors
 
-private int penaltyMin = int.MaxValue;
-private int penaltyMax = int.MinValue;
+private int weightMin = int.MaxValue;
+private int weightMax = int.MinValue;
 
 
 //Base on node radius how many nodes can we fit on the grid
@@ -51,8 +48,10 @@ private void Awake() {
     
     //add each layer and define the layer index as a Key    
     foreach(NodeType n in walkableRegions){
+       //Math way to detect the layers and detecting the name of the layer
+       // we are going to add the layer as a key and the weight will be the value
         walkableMask = walkableMask | n.terrainMask.value;
-        walkableRegionsDictionary.Add((int)Mathf.Log(n.terrainMask.value,2),n.terrainPenalty);     
+        walkableRegionsDictionary.Add((int)Mathf.Log(n.terrainMask.value,2),n.weight);     
     }
     //Create the grid
     CreateGrid();
@@ -112,31 +111,32 @@ private void CreateGrid()
              //Check collision with unwalkable mask
              bool walkable = CheckCollisionNode(worldPoint, UnwalkableMask);
              //for check penalty. This wil change acordingly to the penalty of the layers
-             int movementPenalty = 0;
+             int weightMovement = 0;
              //raycast to detect collision with the layers
 			Ray ray = new Ray(worldPoint + Vector3.up * 50, Vector3.down);
 			RaycastHit hit;
-			//We just want to check the raycast on layers where it can walk. Since the walkable layers are the ones with penalty moves
+			//We just want to check the raycast on layers where it can walk. Since the walkable layers are the ones with penalty moves (weights)
             if (Physics.Raycast(ray,out hit, 100, walkableMask)) {
 				//the movement penaly is assigned to the value with the key of the layers where the raycast detects a collision
-                walkableRegionsDictionary.TryGetValue(hit.collider.gameObject.layer, out movementPenalty);
-               // Debug.Log(movementPenalty);
+                walkableRegionsDictionary.TryGetValue(hit.collider.gameObject.layer, out weightMovement);
+               // Debug.Log(weightMovement);
 			}
 			//if is not walkable we want to add an obstacle proximity penalty.
+            //However this is not working as expected
             if (!walkable) {
-					movementPenalty += obstacleProximityPenalty;
+					weightMovement += obstacleProximityPenalty;
 			}
 
             //this is to check the max and min move penalties
-            //this is useful to use in the gizmos for lerping between to colors and check which zones of the grid are dangerous(The zone that have a bigger penaly move)
-            if (movementPenalty > penaltyMax) {
-					penaltyMax = movementPenalty;
+            //this is useful to use in the gizmos for lerping between to colors and check which zones of the grid are dangerous(The zone that have a bigger weight)
+            if (weightMovement > weightMax) {
+					weightMax = weightMovement;
 			}
-			if (movementPenalty < penaltyMin) {
-					penaltyMin = movementPenalty;
+			if (weightMovement < weightMin) {
+					weightMin = weightMovement;
 			}
              // create new Node
-             Node new_node = new Node(walkable, worldPoint,x,y,movementPenalty);
+             Node new_node = new Node(walkable, worldPoint,x,y,weightMovement);
              grid[x,y] = new_node;
              
            
@@ -144,8 +144,8 @@ private void CreateGrid()
         }
    }
 
-    // Debug.Log("This is max" + penaltyMax);
-    // Debug.Log("This is min" + penaltyMin);
+    // Debug.Log("This is max" + weightMax);
+    // Debug.Log("This is min" + weightMin);
     
     
 
@@ -229,7 +229,7 @@ public Node NodeFromWorldPoint(Vector3 worldPosition){
         if(grid !=null && displayGridGizmos){
             
             foreach(Node n in grid){
-                Gizmos.color = Color.Lerp (Color.white, Color.cyan, Mathf.InverseLerp (penaltyMin, penaltyMax, n.movementPenalty));
+                Gizmos.color = Color.Lerp (Color.white, Color.cyan, Mathf.InverseLerp (weightMin, weightMax, n.weightPenalty));
                 //if there is collision red otherwise withe
                 Gizmos.color = (n.Walkable)?Gizmos.color:Color.red;
                 //Gizmos.color = (n.Walkable)?Color.white:Color.red;
@@ -250,11 +250,11 @@ public Node NodeFromWorldPoint(Vector3 worldPosition){
 
 
 
-//This may change 
+//Class for the layer to detect the layer of each node and their weight
 [System.Serializable]
 public class NodeType{
     public LayerMask terrainMask;
-    public int terrainPenalty;
+    public int weight;
 }
 
 

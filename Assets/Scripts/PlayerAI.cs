@@ -48,6 +48,7 @@ public class PlayerAI : MonoBehaviour
 		pathfinding = GameObject.FindGameObjectWithTag("A_Star").GetComponent<Pathfinding>();
 		grid = GameObject.FindGameObjectWithTag("A_Star").GetComponent<Grid>();
 		//start a couroutine for A start
+		//0.1 seconds
 		StartCoroutine("AstarCourotine",.1f);
 		//Set the timer
 		sw.Start();

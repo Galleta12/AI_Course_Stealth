@@ -243,17 +243,17 @@ public class Pathfinding : MonoBehaviour {
     //Each state in the x and y it will cost 10
     //The diagonals will cost 14
     //14 is the mathematic value for a diagonal move square root of 200
-    private int Heuristic1(Node nodeA, Node nodeB)
-    {
-        int dstX = Mathf.Abs(nodeA.gridPosX - nodeB.gridPosX);
-		int dstY = Mathf.Abs(nodeA.gridPosY - nodeB.gridPosY);
-        //to detect how many diagonal move we need to do. We can do it with 
+    // private int Heuristic1(Node nodeA, Node nodeB)
+    // {
+    //     int dstX = Mathf.Abs(nodeA.gridPosX - nodeB.gridPosX);
+	// 	int dstY = Mathf.Abs(nodeA.gridPosY - nodeB.gridPosY);
+    //     //to detect how many diagonal move we need to do. We can do it with 
         
-        //if this is true then it means that the
-		if (dstX > dstY)
-			return 14*dstY + 10* (dstX-dstY);
-		return 14*dstX + 10 * (dstY-dstX);
-    }
+    //     //if this is true then it means that the
+	// 	if (dstX > dstY)
+	// 		return 14*dstY + 10* (dstX-dstY);
+	// 	return 14*dstX + 10 * (dstY-dstX);
+    // }
     
     //Manhataan to get the distance of two nodes
     //first we get the difference of moving to a node in the x and y component

@@ -157,7 +157,7 @@ public class Pathfinding : MonoBehaviour {
         Vector3[] waypoint = new Vector3[0];
         bool pathSuccess =false;
         // keep track of the state expansion
-        int stateExpansion = 0;
+       
        
         //Get the position in grid base
         Node  startNode = grid.NodeFromWorldPoint(StartNode);
@@ -231,7 +231,7 @@ public class Pathfinding : MonoBehaviour {
 		}else{
             PathFound = false;
         }
-        //print("State Expansion: " + stateExpansion);
+       
 
     }
 

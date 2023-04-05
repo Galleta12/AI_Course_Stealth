@@ -242,8 +242,8 @@ public class Pathfinding : MonoBehaviour {
     
     //Manhataan to get the distance of two nodes
     //first we get the difference of moving to a node in the x and y component
-    // then we get the ramaing node. This means how many horitonal move we need
-    // we add this to the minum value of the distance x or y. Since the minum value means how many diagonal moves we need to move. In order to be on the same line of the node b
+    // then we get the ramaing node. This means how many horizontal moves we need
+    // we add this to the minimum value of the distance x or y. Since the minimum value means how many diagonal moves we need to move. In order to be on the same line of the node b
     private int HeuristicCost(Node nodeA, Node nodeB)
     {
         int dstX = Mathf.Abs(nodeA.gridPosX - nodeB.gridPosX);
@@ -256,6 +256,10 @@ public class Pathfinding : MonoBehaviour {
 		return 14 * Mathf.Min(dstX,dstY) + 10 * remaining;
     }
 
+
+
+// Heuristic that will detect if the proximity with a enemy or their line of sight and like that add the weights
+// With this we want to make A star to get further away, However this approach was not properly working.
      private int HeuristicCostWithEnemyDetection(Node nodeA, Node nodeB)
     {
         int dstX = Mathf.Abs(nodeA.gridPosX - nodeB.gridPosX);
@@ -273,9 +277,7 @@ public class Pathfinding : MonoBehaviour {
         }
     }
 
-    //Heuristic if a node is closer to a red node. We want to increment +10
-
-    //Herusitic if the player not moves for 5 seconds + 5 
+   
 
    
     //calculate the path

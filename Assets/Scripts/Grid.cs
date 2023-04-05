@@ -20,6 +20,7 @@ public float NodeRadius;
 // all the nodes that are walkable by the enemy. Where we want to add move panalty for the weight
 public NodeType[] walkableRegions;
 //obtacle proximity. Each node that collides with an obstacle we want to add it an obstacle proximity penalty
+// THis is not working properly this value is only added to the layer unwalkable (enemies, obstacles)
 public int obstacleProximityPenalty = 10;
 //keep track of the panalty of each layer
 private Dictionary<int,int> walkableRegionsDictionary = new Dictionary<int, int>();

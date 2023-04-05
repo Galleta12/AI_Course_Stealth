@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
-
+//Heap class to sort the nodes with the f function and h cost
 public class Heap<T> where T : IHeapItem<T> {
 	
 	T[] items;
